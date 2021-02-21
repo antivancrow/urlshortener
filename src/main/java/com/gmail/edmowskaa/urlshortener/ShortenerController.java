@@ -9,16 +9,21 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 public class ShortenerController {
     private String externalUrl = "http://127.0.0.1:8080/";
-    private String redisHost = "127.0.0.1";
-    private Integer redisPort = 6379;
+    public UrlCache cache = new UrlCache();
 
     @RequestMapping("/short")
     public String index(@RequestParam(value = "url") String url) {
-        return externalUrl + UrlShortener.short_url(url);
+        String short_url = UrlShortener.short_url(url);
+        cache.set(short_url, url);
+        return externalUrl + "v/" + short_url;
     }
 
     @RequestMapping(path = "/v/{short}")
     public RedirectView view(@PathVariable("short") String short_url) {
-        return new RedirectView("https://github.com/");
+        String full_url = cache.get(short_url);
+        if (!full_url.isEmpty())
+            return new RedirectView("/");
+        else
+            return new RedirectView(full_url);
     }
 }
