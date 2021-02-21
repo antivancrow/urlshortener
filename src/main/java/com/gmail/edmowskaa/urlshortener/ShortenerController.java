@@ -8,7 +8,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 public class ShortenerController {
-    private String externalUrl = "http://127.0.0.1:8080/";
+    private final String externalUrl = "http://127.0.0.1:8080/";
     public UrlCache cache = new UrlCache();
 
     @RequestMapping("/short")
@@ -18,12 +18,9 @@ public class ShortenerController {
         return externalUrl + "v/" + short_url;
     }
 
-    @RequestMapping(path = "/v/{short}")
-    public RedirectView view(@PathVariable("short") String short_url) {
-        String full_url = cache.get(short_url);
-        if (!full_url.isEmpty())
-            return new RedirectView("/");
-        else
-            return new RedirectView(full_url);
+    @RequestMapping(path = "/v/{url_hash}")
+    public RedirectView view(@PathVariable("url_hash") String url_hash) {
+        String full_url = cache.get(url_hash);
+        return new RedirectView(full_url);
     }
 }

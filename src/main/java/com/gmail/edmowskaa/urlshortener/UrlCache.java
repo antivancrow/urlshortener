@@ -7,6 +7,7 @@ public class UrlCache {
     private HashMap<String, String> urlStore;
 
     UrlCache() {
+        urlStore = new HashMap<String, String>();
     }
 
     public static UrlCache getInstance() {
