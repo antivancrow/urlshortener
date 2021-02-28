@@ -1,3 +1,20 @@
+# Purpose
+
+Purpose of the project is to create simple URL shortener service to use as mock in testing environment.
+
+# Requirements
+
+* Java - JDK 11 or later (https://adoptopenjdk.net/)
+* Maven 3.2 or later (https://maven.apache.org/download.cgi)
+
+## Runing project
+
+To run project simple exec this command in working directory:
+
+```
+./mvnw spring-boot:run
+```
+
 # URLs
 
 * GET / - service status
